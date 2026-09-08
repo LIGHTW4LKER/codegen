@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <title>Data Matrix Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <h1>Data Matrix</h1>
+
+      <form id="generatorForm" autocomplete="off">
+        <label for="prefix">1. Префикс</label>
+        <select id="prefix">
+          <option value="P-0-B">P-0-B</option>
+          <option value="P-0-C">P-0-C</option>
+        </select>
+
+        <label for="number1">2. Число</label>
+        <input
+          id="number1"
+          type="text"
+          inputmode="numeric"
+          placeholder="Например, 230"
+        >
+
+        <label for="letter">3. Буква</label>
+        <input
+          id="letter"
+          type="text"
+          inputmode="latin"
+          maxlength="1"
+          placeholder="Например, C"
+          autocapitalize="characters"
+        >
+
+        <label for="number2">4. Число</label>
+        <input
+          id="number2"
+          type="text"
+          inputmode="numeric"
+          placeholder="Например, 271"
+        >
+
+        <button type="submit">Сгенерировать</button>
+      </form>
+
+      <div id="result" class="result" hidden>
+        <div class="code-value" id="codeValue"></div>
+        <div class="matrix-wrap">
+          <canvas id="matrix"></canvas>
+        </div>
+      </div>
+
+      <p id="error" class="error" hidden></p>
+    </section>
+  </main>
+
+  <!-- bwip-js supports Data Matrix generation directly in the browser. -->
+  <script src="https://cdn.jsdelivr.net/npm/bwip-js@4.10.2/dist/bwip-js-min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
