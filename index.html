@@ -1,65 +1,80 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#111111">
-  <title>Data Matrix Generator</title>
+  <meta name="theme-color" content="#111">
+  <title>Code Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
     <section class="card">
-      <h1>Data Matrix</h1>
+      <nav class="tabs" aria-label="Generator">
+        <button class="tab active" data-page="location" type="button">Location</button>
+        <button class="tab" data-page="item" type="button">Item</button>
+        <button class="tab" data-page="dz" type="button">DZ</button>
+      </nav>
 
-      <form id="generatorForm" autocomplete="off">
-        <label for="prefix">1. Префикс</label>
-        <select id="prefix">
-          <option value="P-0-B">P-0-B</option>
-          <option value="P-0-C">P-0-C</option>
-        </select>
+      <section id="location" class="page active">
+        <h1>Location</h1>
+        <form id="locationForm" autocomplete="off">
+          <label for="prefix">1.</label>
+          <select id="prefix">
+            <option value="P-0-B">P-0-B</option>
+            <option value="P-0-C">P-0-C</option>
+          </select>
 
-        <label for="number1">2. Число</label>
-        <input
-          id="number1"
-          type="text"
-          inputmode="numeric"
-          placeholder="Например, 230"
-        >
+          <label for="number1">2.</label>
+          <input id="number1" type="text" inputmode="numeric" placeholder="For example, 230">
 
-        <label for="letter">3. Буква</label>
-        <input
-          id="letter"
-          type="text"
-          inputmode="latin"
-          maxlength="1"
-          placeholder="Например, C"
-          autocapitalize="characters"
-        >
+          <label for="letter">3.</label>
+          <input id="letter" type="text" inputmode="latin" maxlength="1" placeholder="For example, C">
 
-        <label for="number2">4. Число</label>
-        <input
-          id="number2"
-          type="text"
-          inputmode="numeric"
-          placeholder="Например, 271"
-        >
+          <label for="number2">4.</label>
+          <input id="number2" type="text" inputmode="numeric" placeholder="For example, 271">
 
-        <button type="submit">Сгенерировать</button>
-      </form>
+          <button class="generate" type="submit">Generate</button>
+        </form>
 
-      <div id="result" class="result" hidden>
-        <div class="code-value" id="codeValue"></div>
-        <div class="matrix-wrap">
-          <canvas id="matrix"></canvas>
+        <div id="locationResult" class="result" hidden>
+          <div class="code-value" id="locationValue"></div>
+          <div class="code-wrap"><canvas id="locationCanvas"></canvas></div>
         </div>
-      </div>
+        <p id="locationError" class="error" hidden></p>
+      </section>
 
-      <p id="error" class="error" hidden></p>
+      <section id="item" class="page">
+        <h1>Item</h1>
+        <form id="itemForm" autocomplete="off">
+          <label for="itemCode">Code</label>
+          <input id="itemCode" type="text" placeholder="Enter code" autocapitalize="characters" spellcheck="false">
+          <button class="generate" type="submit">Generate</button>
+        </form>
+
+        <div id="itemResult" class="result" hidden>
+          <div class="code-value" id="itemValue"></div>
+          <div class="code-wrap"><canvas id="itemCanvas"></canvas></div>
+        </div>
+        <p id="itemError" class="error" hidden></p>
+      </section>
+
+      <section id="dz" class="page">
+        <h1>DZ</h1>
+        <div class="dz-options">
+          <button class="dz-option" data-dz="B" type="button">B</button>
+          <button class="dz-option" data-dz="C" type="button">C</button>
+        </div>
+
+        <div id="dzResult" class="result" hidden>
+          <div class="code-value" id="dzValue"></div>
+          <div class="code-wrap"><canvas id="dzCanvas"></canvas></div>
+        </div>
+        <p id="dzError" class="error" hidden></p>
+      </section>
     </section>
   </main>
 
-  <!-- bwip-js supports Data Matrix generation directly in the browser. -->
   <script src="https://cdn.jsdelivr.net/npm/bwip-js@4.10.2/dist/bwip-js-min.js"></script>
   <script src="script.js"></script>
 </body>
