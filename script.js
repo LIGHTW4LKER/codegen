@@ -8,3 +8,20 @@ $('itemForm').addEventListener('submit',e=>{e.preventDefault();$('itemError').hi
 $('ts').addEventListener('input',()=>{$('ts').value=$('ts').value.replace(/[^0-9]/g,'').slice(0,3)});
 $('tsForm').addEventListener('submit',e=>{e.preventDefault();$('tsError').hidden=true;const digits=$('ts').value.trim();if(!digits){$('tsError').textContent='Please enter 3 digits.';$('tsError').hidden=false;$('tsResult').hidden=true;return}const value='tsCAGE00'+digits;try{bwipjs.toCanvas($('tsCanvas'),{bcid:'datamatrix',text:value,scale:8,padding:0});$('tsValue').textContent=value;$('tsResult').hidden=false}catch{$('tsError').textContent='Could not generate Data Matrix.';$('tsError').hidden=false;$('tsResult').hidden=true}});
 const dzCodes={B:'dz-S-Buffor_B',C:'dz-S-Buffor_C'};document.querySelectorAll('.dz-option').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.dz-option').forEach(b=>b.classList.remove('active'));button.classList.add('active');const value=dzCodes[button.dataset.dz];$('dzError').hidden=true;try{bwipjs.toCanvas($('dzCanvas'),{bcid:'azteccode',text:value,scale:8,padding:0});$('dzValue').textContent=value;$('dzResult').hidden=false}catch{$('dzError').textContent='Could not generate Aztec Code.';$('dzError').hidden=false;$('dzResult').hidden=true}}));
+
+// Live Central European time (Warsaw time zone, including daylight-saving changes)
+function updateCentralTime(){
+  const now = new Date();
+  const time = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+  }).format(now);
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Warsaw', timeZoneName: 'short'
+  }).formatToParts(now);
+  const zone = parts.find(part => part.type === 'timeZoneName')?.value || 'CET/CEST';
+  $('centralTime').textContent = time;
+  $('centralTime').dateTime = now.toISOString();
+  $('timeZoneLabel').textContent = zone;
+}
+updateCentralTime();
+setInterval(updateCentralTime, 1000);
